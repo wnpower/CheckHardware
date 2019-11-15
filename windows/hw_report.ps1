@@ -94,19 +94,26 @@ Get-PSDrive -PSProvider FileSystem | Format-Table | Out-String
 # RAID
 echo "RAID"
 echo "-------------"
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 # FIX ERROR SSL
 Get-WmiObject -Class Win32_SCSIController | foreach { $_.Name } | ForEach-Object -Process {
     switch -regex ($_) {
         '2004|2008' {
 			"Detectado: $_"
+			Invoke-WebRequest -Uri "https://github.com/wnpower/CheckHardware/raw/master/windows/bin/sas2ircu.exe" -OutFile "$pwd/sas2ircu.exe"
 			& "$pwd\bin\sas2ircu.exe" 0 STATUS | Select-String -Pattern "Volume state"
+			Remove-Item "$pwd/sas2ircu.exe"
 		}
         '3000|1064|1068' {
 			"Detectado: $_"
+			Invoke-WebRequest -Uri "https://github.com/wnpower/CheckHardware/raw/master/windows/bin/LSIUtil.exe" -OutFile "$pwd/LSIUtil.exe"
 			echo "1`n21`n1" | & "$pwd\bin\LSIUtil.exe" | Select-String -Pattern "Volume State:"
+			Remove-Item "$pwd/LSIUtil.exe"
 		}
         'MegaRAID' {
 			"Detectado: $_"
+			Invoke-WebRequest -Uri "https://github.com/wnpower/CheckHardware/raw/master/windows/bin/storcli.exe" -OutFile "$pwd/storcli.exe"
 			& "$pwd\bin\storcli.exe" show
+			Remove-Item "$pwd/storcli.exe"
 		}
         Default { "No se detectó controladora RAID compatible" }
     };
