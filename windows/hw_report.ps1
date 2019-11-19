@@ -115,7 +115,6 @@ Get-WmiObject -Class Win32_SCSIController | foreach { $_.Name } | ForEach-Object
 			& "$pwd\storcli.exe" show
 			Remove-Item "$pwd/storcli.exe"
 		}
-        Default { "No se detectó controladora RAID compatible" }
     };
 };
 
