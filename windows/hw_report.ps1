@@ -119,4 +119,17 @@ Get-WmiObject -Class Win32_SCSIController | foreach { $_.Name } | ForEach-Object
 };
 
 echo ""
+echo "Errores en el Event Viewer (últimas 24 horas)"
+echo "--------------------------"
+
 echo ""
+echo "Application"
+echo "-----------"
+echo ""
+Get-EventLog application -After (Get-Date).AddHours(-24) | where {($_.EntryType -Match "Error") -and ($_.Source -NotMatch "Schannel") -or ($_.EntryType -Match "Critical")}
+
+echo ""
+echo "System"
+echo "------"
+echo ""
+Get-EventLog system -After (Get-Date).AddHours(-24) | where {($_.EntryType -Match "Error") -and ($_.Source -NotMatch "Schannel") -or ($_.EntryType -Match "Critical")}
