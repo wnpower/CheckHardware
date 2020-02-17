@@ -25,7 +25,11 @@ foreach ($drive in (Get-PSDrive -PSProvider FileSystem).Name)
 	Write-Host -NoNewline "Revisando SMART de "$drive": ..."
 	echo ""
 	echo "--------------------------"
-	$output = & 'C:\Program Files\smartmontools\bin\smartctl.exe' -a $drive":"
+	if(!(Test-Path -Path 'C:\Program Files\smartmontools\bin\smartctl.exe')){
+		$output = & 'C:\Program Files (x86)\smartmontools\bin\smartctl.exe' -a $drive":"
+	} else {
+		$output = & 'C:\Program Files\smartmontools\bin\smartctl.exe' -a $drive":"
+	}
 	$Reallocated_Sector_Ct = ((echo $output | Select-String -Pattern "Reallocated_Sector_Ct") -split " +")[10]
 	$Reallocated_Event_Count = ((echo $output | Select-String -Pattern "Reallocated_Event_Count") -split " +")[10]
 	$Current_Pending_Sector = ((echo $output | Select-String -Pattern "Current_Pending_Sector") -split " +")[10]
