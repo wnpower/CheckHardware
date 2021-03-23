@@ -10,7 +10,8 @@ Chequea:
 ## Ejecución
 ### Windows
 Ejecutar en PowerShell:
-    [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
+
+	[Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
     Invoke-WebRequest -Uri "https://raw.githubusercontent.com/wnpower/CheckHardware/master/windows/hw_report.ps1" -OutFile "$pwd/hw_report.ps1"; Set-ExecutionPolicy RemoteSigned -Force; & "$pwd/hw_report.ps1"; Remove-Item "$pwd/hw_report.ps1"
 
 ### Linux
