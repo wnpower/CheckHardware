@@ -15,4 +15,6 @@ Ejecutar en PowerShell:
     Invoke-WebRequest -Uri "https://raw.githubusercontent.com/wnpower/CheckHardware/master/windows/hw_report.ps1" -OutFile "$pwd/hw_report.ps1"; Set-ExecutionPolicy RemoteSigned -Force; & "$pwd/hw_report.ps1"; Remove-Item "$pwd/hw_report.ps1"
 
 ### Linux
-TODO
+Ejecutar como root en consola SSH:
+
+	wget https://raw.githubusercontent.com/wnpower/CheckHardware/master/linux/hw_report.sh; chmod 755 ./hw_report.sh; ./hw_report.sh
