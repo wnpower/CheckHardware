@@ -2,6 +2,15 @@
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 CWD="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+# RAM
+echo ""
+echo "RAM disponible:"
+echo ""
+free -m
+echo ""
+echo "------------------------------------------------"
+echo ""
+
 # CHECK ESPACIO EN DISCO
 echo ""
 echo "Espacio en disco:"
@@ -56,6 +65,15 @@ fi
 echo ""
 echo "------------------------------------------------"
 echo ""
+
+# SMART
+wget -q https://raw.githubusercontent.com/wnpower/CheckHardware/master/linux/check_smart.pl -O $CWD/check_smart.pl
+wget -q https://raw.githubusercontent.com/wnpower/CheckHardware/master/linux/check_smart.pl -O $CWD/check_smart.sh
+chmod 755 $CWD/check_smart.sh
+$CWD/check_smart.sh
+
+rm -f $CWD/check_smart.pl
+rm -f $CWD/check_smart.sh
 
 # CHECK DE LOGS
 # MESSAGES
