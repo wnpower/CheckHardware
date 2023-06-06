@@ -3,6 +3,7 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 CWD="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # CHECK ESPACIO EN DISCO
+echo ""
 echo "Espacio en disco:"
 echo ""
 df -h
@@ -17,13 +18,19 @@ RAID_ENABLED=$(lspci | grep "RAID\|SCSI" 2>&1 >/dev/null && echo "SI" || echo "N
 if [ "$RAID_ENABLED" = "SI" ]; then
         echo "Tiene RAID por HW, detectando modelo..."
         if echo "$RAID" | grep "SAS2008\|SAS2004\|SAS 2008" > /dev/null; then
-		$CWD/bin/sas2ircu 0 STATUS | grep "Optimal" > /dev/null && echo "SAS2008|SAS2004: OK" || echo "SAS2008|SAS2004: ERROR"
+		wget -q https://raw.githubusercontent.com/wnpower/CheckHardware/master/linux/bin/sas2ircu -O /var/sas2ircu; chmod 755 /var/sas2ircu
+		/var/sas2ircu 0 STATUS | grep "Optimal" > /dev/null && echo "SAS2008|SAS2004: OK" || echo "SAS2008|SAS2004: ERROR"
+		rm -f /var/sas2ircu
 
         elif echo "$RAID" | grep "SAS1064\|SAS1068" > /dev/null; then
-		echo -ne "1\n21\n1" | $CWD/bin/lsiutil.1.71.x86_64 2>/dev/null | grep "optimal" >/dev/null && echo "SAS1064|SAS1068: OK" || echo "SAS1064|SAS1068: ERROR"
+		wget -q https://raw.githubusercontent.com/wnpower/CheckHardware/master/linux/bin/lsiutil.1.71.x86_64; chmod 755 /var/lsiutil.1.71.x86_64
+		echo -ne "1\n21\n1" | /var/lsiutil.1.71.x86_64 2>/dev/null | grep "optimal" >/dev/null && echo "SAS1064|SAS1068: OK" || echo "SAS1064|SAS1068: ERROR"
+		rm -f /var/lsiutil.1.71.x86_64
 
         elif echo "$RAID" | grep "M1015\|SAS 2108\|SAS2108\|SAS9260\|3108" > /dev/null; then
-        	$CWD/bin/storcli64 /c0 show | grep "VD LIST" -A10 | grep "RAID" | grep -v "Optl" > /dev/null && echo "M1015|SAS2108|SAS9260|3108: ERROR" || echo "M1015|SAS2108|SAS9260|3108: OK"
+		wget -q https://raw.githubusercontent.com/wnpower/CheckHardware/master/linux/bin/storcli64; chmod 755 /var/storcli64
+        	/var/storcli64 /c0 show | grep "VD LIST" -A10 | grep "RAID" | grep -v "Optl" > /dev/null && echo "M1015|SAS2108|SAS9260|3108: ERROR" || echo "M1015|SAS2108|SAS9260|3108: OK"
+		rm -f /var/storcli64
 	fi
 
 fi
