@@ -23,12 +23,12 @@ if [ "$RAID_ENABLED" = "SI" ]; then
 		rm -f /var/sas2ircu
 
         elif echo "$RAID" | grep "SAS1064\|SAS1068" > /dev/null; then
-		wget -q https://raw.githubusercontent.com/wnpower/CheckHardware/master/linux/bin/lsiutil.1.71.x86_64; chmod 755 /var/lsiutil.1.71.x86_64
+		wget -q https://raw.githubusercontent.com/wnpower/CheckHardware/master/linux/bin/lsiutil.1.71.x86_64 -O /var/lsiutil.1.71.x86_64; chmod 755 /var/lsiutil.1.71.x86_64
 		echo -ne "1\n21\n1" | /var/lsiutil.1.71.x86_64 2>/dev/null | grep "optimal" >/dev/null && echo "SAS1064|SAS1068: OK" || echo "SAS1064|SAS1068: ERROR"
 		rm -f /var/lsiutil.1.71.x86_64
 
         elif echo "$RAID" | grep "M1015\|SAS 2108\|SAS2108\|SAS9260\|3108" > /dev/null; then
-		wget -q https://raw.githubusercontent.com/wnpower/CheckHardware/master/linux/bin/storcli64; chmod 755 /var/storcli64
+		wget -q https://raw.githubusercontent.com/wnpower/CheckHardware/master/linux/bin/storcli64 -O /var/storcli64; chmod 755 /var/storcli64
         	/var/storcli64 /c0 show | grep "VD LIST" -A10 | grep "RAID" | grep -v "Optl" > /dev/null && echo "M1015|SAS2108|SAS9260|3108: ERROR" || echo "M1015|SAS2108|SAS9260|3108: OK"
 		rm -f /var/storcli64
 	fi
