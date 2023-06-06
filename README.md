@@ -4,7 +4,7 @@ Chequea:
 
  - Estado de SMART de los discos
  - Estado de los volúmenes RAID (si tiene placa RAID)
- - Cantidad de memoria RAM disponible
+ - Cantidad de memoria RAM y disco disponible
  - Espacio en disco disponible
 
 ## Ejecución

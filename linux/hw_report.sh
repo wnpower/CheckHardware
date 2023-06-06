@@ -70,6 +70,8 @@ echo ""
 wget -q https://raw.githubusercontent.com/wnpower/CheckHardware/master/linux/check_smart.pl -O $CWD/check_smart.pl
 wget -q https://raw.githubusercontent.com/wnpower/CheckHardware/master/linux/check_smart.pl -O $CWD/check_smart.sh
 chmod 755 $CWD/check_smart.sh
+chmod 755 $CWD/check_smart.pl
+
 $CWD/check_smart.sh
 
 rm -f $CWD/check_smart.pl
