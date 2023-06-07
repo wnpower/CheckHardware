@@ -11,6 +11,9 @@ if [ ! -f /usr/sbin/smartctl ]; then
         exit 1
 fi
 
+wget -q https://raw.githubusercontent.com/wnpower/CheckHardware/master/linux/check_smart.pl -O $CWD/check_smart.pl
+chmod 755 $CWD/check_smart.pl
+
 MESSAGE="OK"
 
 rm -f $FILE
@@ -59,6 +62,7 @@ sed -i 's/WARNING/ERROR/g' $FILE
 cat $FILE | sort | uniq
 
 rm -f $FILE
+rm -f $CWD/check_smart.pl
 
 exit 0
 

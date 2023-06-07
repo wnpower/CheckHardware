@@ -67,14 +67,9 @@ echo "------------------------------------------------"
 echo ""
 
 # SMART
-wget -q https://raw.githubusercontent.com/wnpower/CheckHardware/master/linux/check_smart.pl -O $CWD/check_smart.pl
-wget -q https://raw.githubusercontent.com/wnpower/CheckHardware/master/linux/check_smart.pl -O $CWD/check_smart.sh
+wget -q https://raw.githubusercontent.com/wnpower/CheckHardware/master/linux/check_smart.sh -O $CWD/check_smart.sh
 chmod 755 $CWD/check_smart.sh
-chmod 755 $CWD/check_smart.pl
-
 $CWD/check_smart.sh
-
-rm -f $CWD/check_smart.pl
 rm -f $CWD/check_smart.sh
 
 # CHECK DE LOGS
